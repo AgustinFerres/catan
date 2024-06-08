@@ -301,7 +301,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 20, z: 0}
+  m_LocalPosition: {x: 0, y: 19, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -337,8 +337,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexTile: {fileID: 7214504802808927021, guid: cba57889bb7afae46848cc27cc0a196e, type: 3}
-  gridLength: 3
+  node: {fileID: 8268586554264825232, guid: b20a02a139b39a8469b6a4abb33f63fe, type: 3}
+  gridWidth: 1
   gridHeight: 1
+  camera: {fileID: 963194227}
 --- !u!4 &1445905107
 Transform:
   m_ObjectHideFlags: 0

@@ -1,12 +1,12 @@
-using UnityEngine;
+using System;
 using TMPro;
+using TreeEditor;
+using Unity.VisualScripting;
+using UnityEngine;
 
-public class Tile : MonoBehaviour
+public class Node : MonoBehaviour
 {
     [SerializeField] private TextMeshPro text;
-    private TileType type;
-    private int number;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,23 +19,14 @@ public class Tile : MonoBehaviour
         
     }
 
-    public string GetText()
-    {
-        return text.text;
-    }
-
     public void SetText(string value)
     {
         text.text = value;
     }
 
-    public void SetType(TileType value)
+    public override int GetHashCode()
     {
-        type = value;
+        return HashCode.Combine(text.text);
     }
 
-    public void SetNumber(int value)
-    {
-        number = value;
-    }
 }
