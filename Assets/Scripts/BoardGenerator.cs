@@ -10,7 +10,8 @@ public class BoardGenerator : MonoBehaviour
     [SerializeField] private int gridHeight;
     [SerializeField] private Camera camera;
     private readonly float hexSize = 1.0f;
-    private Dictionary<int, Vector3> nodes = new Dictionary<int, Vector3>();
+    private Dictionary<Vector3, int> nodes = new Dictionary<Vector3, int>();
+    private List<int> nodesIndex = new List<int>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,8 +35,10 @@ public class BoardGenerator : MonoBehaviour
                 hex.SetText(i.ToString());
                 hex.transform.position = HexToPixel(new Vector2(ActualPosition(k, j), -j));
 
-                GenerateTopNodes(hex, i * 2 + j, nodes); // Generate top nodes
-                GenerateBottomNodes(hex, i * 2 + j + actualLength + 2, nodes); // Generate bottom nodes
+                int value = i * 2 + j;
+                GenerateTopNodes(hex, value, nodes); // Generate top nodes
+                int value2 = j < gridHeight / 2 ? value + actualLength * 2 + 2 : value + i + k + 2;
+                GenerateBottomNodes(hex, value2, nodes); // Generate bottom node
                 i++;
             }
         }
@@ -43,15 +46,15 @@ public class BoardGenerator : MonoBehaviour
         foreach (var node in nodes)
         {
             var n = Instantiate(this.node);
-            n.transform.position = node.Value;
-            n.SetText(node.Key.ToString());
+            n.transform.position = node.Key;
+            n.SetText(node.Value.ToString());
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     Vector3 HexToPixel(Vector2 hex)
@@ -71,52 +74,43 @@ public class BoardGenerator : MonoBehaviour
         return j <= gridHeight / 2 ? k : k + (j - gridHeight / 2);
     }
 
-    void GenerateTopNodes(Tile hexTile, int value, Dictionary<int, Vector3> nodes)
+    void GenerateTopNodes(Tile hexTile, int value, Dictionary<Vector3, int> nodes)
     {
         // node 1
-        if (!nodes.ContainsKey(value))
-        {
-            nodes.Add(value, hexTile.transform.position - new Vector3(hexSize, 0, 0));
-        }
+        Vector3 node1 = hexTile.transform.position - new Vector3(hexSize, 0, 0);
+        CheckAndAddNode(node1, value, nodes);
 
         // node 2
-        if (!nodes.ContainsKey(value + 1))
-        {
-            nodes.Add(value + 1, hexTile.transform.position - new Vector3(hexSize / 2, 0, hexSize * Mathf.Sqrt(3) / -2));
-        }
+        Vector3 node2 = hexTile.transform.position - new Vector3(hexSize / 2, 0, hexSize * Mathf.Sqrt(3) / -2);
+        CheckAndAddNode(node2, value + 1, nodes);
 
         // node 3
-        if (!nodes.ContainsKey(value + 2))
+        Vector3 node3 = hexTile.transform.position + new Vector3(hexSize / 2, 0, hexSize * Mathf.Sqrt(3) / 2);
+        CheckAndAddNode(node3, value + 2, nodes);
+    }
+
+    void GenerateBottomNodes(Tile hexTile, int value, Dictionary<Vector3, int> nodes)
+    {
+        // node 4
+        Vector3 node4 = hexTile.transform.position - new Vector3(hexSize / 2, 0, hexSize * Mathf.Sqrt(3) / 2);
+        CheckAndAddNode(node4, value, nodes);
+
+        // node 5
+        Vector3 node5 = hexTile.transform.position + new Vector3(hexSize / 2, 0, hexSize * Mathf.Sqrt(3) / -2);
+        CheckAndAddNode(node5, value + 1, nodes);
+
+        // node 6
+        Vector3 node6 = hexTile.transform.position + new Vector3(hexSize, 0, 0);
+        CheckAndAddNode(node6, value + 2, nodes);
+    }
+
+    void CheckAndAddNode(Vector3 node, int value, Dictionary<Vector3, int> nodes)
+    {
+        if (!nodes.ContainsKey(node) && !nodesIndex.Contains(value))
         {
-            nodes.Add(value + 2, hexTile.transform.position + new Vector3(hexSize / 2, 0, hexSize * Mathf.Sqrt(3) / 2));
+            nodes.Add(node, value);
+            nodesIndex.Add(value);
         }
     }
 
-    void GenerateBottomNodes(Tile hexTile, int value, Dictionary<int, Vector3> nodes)
-    {
-        // node 4
-        if (!nodes.ContainsKey(value))
-        {
-            nodes.Add(value, hexTile.transform.position - new Vector3(hexSize / 2, 0, hexSize * Mathf.Sqrt(3) / 2));
-        }
-
-        // node 5
-        if (!nodes.ContainsKey(value + 1))
-        {
-            nodes.Add(value + 1, hexTile.transform.position + new Vector3(hexSize / 2, 0, hexSize * Mathf.Sqrt(3) / -2));
-        }
-
-        // node 6
-        if (!nodes.ContainsKey(value + 2))
-        {
-            nodes.Add(value + 2, hexTile.transform.position + new Vector3(hexSize, 0, 0));
-        }
-    }   
-
-    //List<Node> GetNodesByHex(Tile hexTile)
-    //{
-    //    int hexValue = int.Parse(hexTile.GetText());
-
-
-    //}
 }
