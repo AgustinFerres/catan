@@ -18,8 +18,7 @@ public class BoardGenerator : MonoBehaviour
             for (int k = 0; k < 3; k++)
             {
                 var hex = Instantiate(hexTile);
-                hex.SetText(i++.ToString());
-
+                //initial iteration: w - floor(h/2)
             }
         }
         //for (int q = -gridLength; q <= gridLength; q++)
