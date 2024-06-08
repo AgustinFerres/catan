@@ -37,7 +37,7 @@ public class BoardGenerator : MonoBehaviour
 
                 int value = i * 2 + j;
                 GenerateTopNodes(hex, value, nodes); // Generate top nodes
-                int value2 = j < gridHeight / 2 ? value + actualLength * 2 + 2 : value + i + k + 2;
+                int value2 = j < gridHeight / 2 ? value + actualLength * 2 + 2 : value * 2 - (i + (k + 1));
                 GenerateBottomNodes(hex, value2, nodes); // Generate bottom node
                 i++;
             }
