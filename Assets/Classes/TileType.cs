@@ -1,12 +1,15 @@
 
-public enum TileType
+namespace Classes
 {
-    Water,
-    Desert,
-    Sheep,
-    Wheat,
-    Wood,
-    Brick,
-    Rock,
-    Gold
+    public enum TileType
+    {
+        Water,
+        Desert,
+        Sheep,
+        Wheat,
+        Wood,
+        Brick,
+        Rock,
+        Gold
+    }
 }
