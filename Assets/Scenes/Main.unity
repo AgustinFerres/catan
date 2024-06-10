@@ -429,9 +429,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b077867de73994897c3eb756d254e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridHeight: 7
-  gridWidth: 5
+  gridHeight: 9
+  gridWidth: 7
   hexSize: 1
+  pathOffset: 0.865
   tiles: {fileID: 392119417}
   nodes: {fileID: 1305807309}
   paths: {fileID: 1014454827}
