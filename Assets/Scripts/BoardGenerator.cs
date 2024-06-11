@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using Classes;
 using UnityEngine;
 using Utils;
+using Random = UnityEngine.Random;
 
 public class BoardGenerator : MonoBehaviour
 {
@@ -26,10 +28,12 @@ public class BoardGenerator : MonoBehaviour
 
     private List<Vector3> tilePositions = new(); // list of tile positions
     private Dictionary<TileType, int> tileTypeCount = new(); // dictionary to keep track of tile types
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    
+    public void Generate(int gridWidth, int gridHeight)
     {
+        this.gridWidth = gridWidth;
+        this.gridHeight = gridHeight;
+        
         // Verify and adjust
         VerifyHeight();
 
@@ -37,15 +41,32 @@ public class BoardGenerator : MonoBehaviour
         InitializeChildren();
         InitializeVariables();
 
-        // Debug
-        Debug.Log($"Tiles: {tilePositions.Count}");
-        foreach (var tileType in tileTypeCount)
-        {
-            Debug.Log($"{tileType.Key}: {tileType.Value}");
-        }
-
         // Generate Grid
         GenerateGrid();
+    }
+    
+    public void Remove()
+    {
+        foreach (Transform child in tiles.transform)
+        {
+            Destroy(child.gameObject, 0);
+        }
+        Destroy(tiles, 0);
+        
+        foreach (Transform child in nodes.transform)
+        {
+            Destroy(child.gameObject, 0);
+        }
+        Destroy(nodes, 0);
+        
+        foreach (Transform child in paths.transform)
+        {
+            Destroy(child.gameObject, 0);
+        }
+        Destroy(paths, 0);
+        
+        nodePositions.Clear();
+        pathPositions.Clear();
     }
 
     private void InitializeChildren()
