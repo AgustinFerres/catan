@@ -8,6 +8,7 @@ public class BoardManager : MonoBehaviour
     private BoardGenerator boardGenerator;
     private TMP_InputField widthInput, heightInput;
     private Button generateButton;
+    private Camera mainCamera;
 
     private int width;
     private int height;
@@ -21,6 +22,7 @@ public class BoardManager : MonoBehaviour
         var inputFields = GetComponentsInChildren<TMP_InputField>();
         widthInput = inputFields[0];
         heightInput = inputFields[1];
+        mainCamera = Camera.main;
         
         generateButton.onClick.AddListener(GenerateBoard);
         widthInput.onValueChanged.AddListener(OnWidthChanged);
@@ -35,6 +37,9 @@ public class BoardManager : MonoBehaviour
         }
         boardGenerator.Generate(width, height);
         count = 1;
+        mainCamera.transform.position = boardGenerator.GetCenter();
+        mainCamera.transform.position += new Vector3(0, 4 * height, 0);
+        mainCamera.transform.rotation = Quaternion.Euler(90, 0, 30);
     }
     
     private void OnWidthChanged(string value)

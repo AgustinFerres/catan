@@ -28,6 +28,7 @@ public class BoardGenerator : MonoBehaviour
 
     private List<Vector3> tilePositions = new(); // list of tile positions
     private Dictionary<TileType, int> tileTypeCount = new(); // dictionary to keep track of tile types
+    private Vector3 center; // center tile
     
     public void Generate(int gridWidth, int gridHeight)
     {
@@ -43,26 +44,15 @@ public class BoardGenerator : MonoBehaviour
 
         // Generate Grid
         GenerateGrid();
+        
+        // Set center tile
+        this.center = GridUtils.GetCenter(tilePositions);
     }
     
     public void Remove()
     {
-        foreach (Transform child in tiles.transform)
-        {
-            Destroy(child.gameObject, 0);
-        }
         Destroy(tiles, 0);
-        
-        foreach (Transform child in nodes.transform)
-        {
-            Destroy(child.gameObject, 0);
-        }
         Destroy(nodes, 0);
-        
-        foreach (Transform child in paths.transform)
-        {
-            Destroy(child.gameObject, 0);
-        }
         Destroy(paths, 0);
         
         nodePositions.Clear();
@@ -172,5 +162,10 @@ public class BoardGenerator : MonoBehaviour
         }
 
         return TileType.Water;
+    }
+    
+    public Vector3 GetCenter()
+    {
+        return center;
     }
 }

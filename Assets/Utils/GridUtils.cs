@@ -86,5 +86,13 @@ namespace Utils
 
             return tileTypeCount;
         }
+        
+        public static Vector3 GetCenter(List<Vector3> positions)
+        {
+            var center = Vector3.zero;
+            positions.ForEach(position => center += position);
+
+            return center / positions.Count;
+        }
     }
 }
