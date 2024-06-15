@@ -116,8 +116,7 @@ public class BoardGenerator : MonoBehaviour
             // check if the node already exists, if not create a new node
             if (!nodePositions.Contains(roundedPosition))
             {
-                var node = Instantiate(nodePrefab, position, Quaternion.identity, nodes.transform);
-                node.SetText($"{roundedPosition}");
+                Instantiate(nodePrefab, position, Quaternion.identity, nodes.transform);
                 nodePositions.Add(roundedPosition);
             }
         }
