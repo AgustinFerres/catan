@@ -7,9 +7,8 @@ using Random = UnityEngine.Random;
 
 public class BoardGenerator : MonoBehaviour
 {
-    [Header("Grid Settings")] [SerializeField]
-    private int gridHeight;
-
+    [Header("Grid Settings")] 
+    [SerializeField]private int gridHeight;
     [SerializeField] private int gridWidth;
     [SerializeField] private float hexSize = 1f;
     [SerializeField] private float pathOffset = .865f;
